@@ -8,6 +8,7 @@ import compression from 'compression';
 import cors from 'cors';
 import schema from './schema';
 import MongoConfig from './config/MongoConfig';
+import helmet from 'helmet';
 
 dotenv.config();
 let mongo: MongoConfig = new MongoConfig();
@@ -18,6 +19,7 @@ const server = new ApolloServer({
   validationRules: [depthLimit(7)],
   playground: true,
 });
+app.use(helmet());
 app.use('*', cors());
 app.use(compression());
 server.applyMiddleware({ app, path: '/graphql' });
